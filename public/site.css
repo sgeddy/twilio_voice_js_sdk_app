@@ -1,30 +1,104 @@
 ﻿@import url(https://fonts.googleapis.com/css?family=Share+Tech+Mono);
 
+html { 
+  background: url(twilio_logo_background.png) no-repeat center center fixed; 
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+}
+
 body,
 p {
   padding: 0;
   margin: auto;
   font-family: Arial, Helvetica, sans-serif;
 }
+title {
+  color: #023B50;
+}
 
 h1 {
   text-align: center;
+  color: #023B50;
 }
 
 h2 {
   margin-top: 0;
   border-bottom: 1px solid black;
+  color: #023B50;
 }
 
 button {
+  transition-duration: 0.4s;
   margin-bottom: 10px;
+  background-color: white;
+  color: black;
+  border: 2px solid #4CAF50; /* Green */
+}
+
+a.button5{
+   display:inline-block;
+   padding:0.46em 1.6em;
+   border:0.1em solid #000000;
+   margin:0 0.2em 0.2em 0;
+   border-radius:0.12em;
+   box-sizing: border-box;
+   text-decoration:none;
+   font-family:'Roboto',sans-serif;
+   font-weight:300;
+   color:#000000;
+   text-shadow: 0 0.04em 0.04em rgba(0,0,0,0.35);
+   background-color:#FFFFFF;
+   text-align:center;
+   transition: all 0.15s;
+}
+a.button5:hover{
+   text-shadow: 0 0 2em rgba(255,255,255,1);
+   color:#FFFFFF;
+   cursor: pointer;
+}
+
+a.button4{
+   display:inline-block;
+   padding:0.46em 1.6em;
+   border:0.1em solid #000000;
+   margin:0 0.2em 0.2em 0;
+   border-radius:0.12em;
+   box-sizing: border-box;
+   text-decoration:none;
+   font-family:'Roboto',sans-serif;
+   font-weight:300;
+   color:#000000;
+   text-shadow: 0 0.04em 0.04em rgba(0,0,0,0.35);
+   background-color:#FFFFFF;
+   text-align:center;
+   transition: all 0.15s;
+}
+a.button4:hover{
+   text-shadow: 0 0 2em rgba(255,255,255,1);
+   color:#FFFFFF;
+   cursor: pointer;
+}
+
+@media all and (max-width:30em){
+   a.button5{
+      display:block;
+      margin:0.4em auto;
+   }
+}
+
+button:hover {
+  background-color: #4CAF50; /* Green */
+  color: white;
 }
 
 label {
   text-align: left;
   font-size: 1.25em;
-  color: #777776;
+  color: #023B50;
   display: block;
+  font-weight: 525;
 }
 
 header {
@@ -38,6 +112,105 @@ main {
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
+}
+
+.container {
+  background-color: white;
+  width: 295px;
+  padding: 10px;
+  margin: 10px auto;
+  height: 100%;
+  padding-bottom: 10px;
+  text-align: center;
+  box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22);
+}
+
+#call {
+  display: inline-block;
+  background-color: #66bb6a;
+  padding: 4px 30px;
+  margin: 10px;
+  color: white;
+  border-radius: 4px;
+  float: left;
+  cursor: pointer;
+}
+
+#call:hover {
+  background-color: #81c784;
+}
+
+#button-accept-incoming {
+  display: inline-block;
+  background-color: #66bb6a;
+  padding: 4px 30px;
+  margin: 10px;
+  color: white;
+  border-radius: 4px;
+  float: left;
+  cursor: pointer;
+}
+
+#button-accept-incoming:hover {
+  background-color: #81c784;
+}
+
+#hangup {
+  display: inline-block;
+  background-color: red;
+  padding: 4px 30px;
+  margin: 10px;
+  color: white;
+  border-radius: 4px;
+  float: left;
+  cursor: pointer;
+}
+
+#hangup-icon {
+  filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=0.5);
+  -webkit-transform: rotate(135deg);
+  -moz-transform: rotate(135deg);
+  -ms-transform: rotate(135deg);
+  -o-transform: rotate(135deg);
+  transform: rotate(135deg);
+}
+
+#hangup:hover {
+  background-color: #ff5858;
+}
+
+#hangup-incoming {
+  display: inline-block;
+  background-color: red;
+  padding: 4px 30px;
+  margin: 10px;
+  color: white;
+  border-radius: 4px;
+  float: left;
+  cursor: pointer;
+}
+
+#hangup-incoming:hover {
+  background-color: #ff5858;
+}
+
+#button-reject-incoming {
+  display: inline-block;
+  background-color: red;
+  padding: 4px 30px;
+  margin: 10px;
+  color: white;
+  border-radius: 4px;
+  float: left;
+  cursor: pointer;
+}
+
+#button-reject-incoming:hover {
+  background-color: #ff5858;
+}
+
+.identity {
+  color: #023B50;
 }
 
 .left-column,
@@ -59,21 +232,21 @@ main {
 }
 
 select {
-  width: 300px;
+  width: 100%px;
   height: 60px;
   margin-bottom: 10px;
 }
 
 /* Center Column */
 input {
-  font-family: Helvetica-LightOblique, Helvetica, sans-serif;
   font-style: oblique;
   font-size: 1em;
   width: 100%;
   height: 2.5em;
   padding: 0;
   display: block;
-  margin: 10px 0;
+  margin: 0px 0;
+  font-family: 'Exo';
 }
 
 div#volume-indicators {
@@ -112,6 +285,76 @@ div#volume-indicators > div {
   width: 90%;
 }
 
+#output {
+  font-family: "Exo";
+  font-size: 2rem;
+  height: 60px;
+  font-weight: bold;
+  color: #1976d2;
+}
+
+.bottom {
+  color: #686865;
+  font-family: "Share Tech Mono", "Courier New", Courier, fixed-width;
+  font-size: 1.25em;
+  text-align: center;
+  align:  center;
+  left: 20px;
+  left: 40;
+  border-bottom: 2px solid black;
+
+}
+
+.botrow {
+  margin: 0 auto;
+  width: 280px;
+  clear: both;
+  text-align: center;
+  font-family: 'Exo';
+}
+
+.setting {
+  vertical-align:top;
+  text-align: center;
+  font-family: 'Exo';
+}
+
+.sub {
+  font-size: 0.8rem;
+  color: grey;
+}
+
+.digit,
+.dig {
+  float: left;
+  padding: 10px 30px;
+  width: 30px;
+  font-size: 2rem;
+  cursor: pointer;
+}
+
+.digit:active,
+.dig:active {
+  background-color: #e6e6e6;
+}
+
+.dig {
+  float: left;
+  padding: 10px 20px;
+  margin: 10px;
+  width: 30px;
+  cursor: pointer;
+}
+
+.row {
+  display: flex;
+  margin: 0 auto;
+  width: 280px;
+  clear: both;
+  text-align: center;
+  font-family: 'Exo';
+}
+
 /* Other Styles */
 .hide {
   position: absolute !important;
@@ -119,6 +362,5 @@ div#volume-indicators > div {
   left: -9999px !important;
 }
 
-button:disabled {
-  cursor: not-allowed;
-}
+
+

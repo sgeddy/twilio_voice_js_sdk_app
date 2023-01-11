@@ -3,62 +3,259 @@
   <head>
     <title>Twilio Voice JavaScript SDK Quickstart</title>
     <link rel="stylesheet" href="site.css" />
+    <link href="https://fonts.googleapis.com/css?family=Exo" rel="stylesheet">
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
   </head>
   <body>
     <header>
+      <script src="https://www.gstatic.com/firebasejs/4.8.0/firebase-app.js"></script>
+      <script src="https://www.gstatic.com/firebasejs/4.8.0/firebase-messaging.js"></script>
+      <script src="notify_actions.js"></script>
       <h1>Twilio Voice JavaScript SDK Quickstart</h1>
-      <button id="startup-button">Start up the Device</button>
+
+      <div class="" id="launch-div" style="align-content: center;">
+        <a id="startup-button" class="button5" style="font-size:1.5em;background-color:#2596be;">Launch</a>
+        <br>
+        <br>
+        <div id="region-div">
+          <input type="radio" value="us1" id="button-us1" name="score" checked>Ashburn, Virginia - US1
+          <input type="radio" value="ie1" id="button-ie1" name="score">Dublin, Ireland - IE1
+          <input type="radio" value="au1" id="button-au1" name="score">Sydney, Australia - AU1
+          <input type="radio" value="us2" id="button-us2" name="score" disabled>Umatilla, Oregon - US2 (Coming soon)
+        </div>
+
+      </div>
+      
     </header>
     <main id="controls">
       <section class="left-column" id="info">
         <h2>Your Device Info</h2>
-        <div id="client-name"></div>
+        <div class="identity" id="client-name"></div>
         <div id="output-selection" class="hide">
           <label>Ringtone Devices</label>
           <select id="ringtone-devices" multiple></select>
           <label>Speaker Devices</label>
-          <select id="speaker-devices" multiple></select
-          ><br />
-          <button id="get-devices">Seeing "Unknown" devices?</button>
+          <select id="speaker-devices" multiple></select>
+          <br />
+          <div style="font-size:1em">
+            <a id="get-devices" class="button4" style="background-color:#2596be;">Seeing "Unknown" devices?</a>
+          </div>
+          <br>
+          <br>
+          <h2>Create Binding</h2>
+          <form id="binding_form">
+          Identity: <input type="text" name="identity_field"><br>
+          Address: <input type="text" name="address_field" size="200" value="<device token>"> <br>
+          <input type="button" onclick="createBinding()" value="Create Binding">
+          </form>
+          <br>
+          <h2>Send Notification to Identity</h2>
+          <input type="text" id="identityInput" placeholder="Sam" size="30"/>
+          <p/>
+          <input type="submit" id="sendNotificationButton" value="Send Notification"/>
         </div>
       </section>
       <section class="center-column">
         <h2 class="instructions">Make a Call</h2>
         <div id="call-controls" class="hide">
-          <form>
-            <label for="phone-number"
-              >Enter a phone number or client name</label
-            >
-            <input id="phone-number" type="text" placeholder="+15552221234" />
-            <button id="button-call" type="submit">Call</button>
-          </form>
-          <button id="button-hangup" class="hide">Hang Up</button>
-          <div id="incoming-call" class="hide">
-            <h2>Incoming Call Controls</h2>
-            <p class="instructions">
-              Incoming Call from <span id="incoming-number"></span>
-            </p>
-            <button id="button-accept-incoming">Accept</button>
-            <button id="button-reject-incoming">Reject</button>
-            <button id="button-hangup-incoming" class="hide">Hangup</button>
-          </div>
-          <div id="volume-indicators" class="hide">
-            <label>Mic Volume</label>
-            <div id="input-volume"></div>
-            <br /><br />
-            <label>Speaker Volume</label>
-            <div id="output-volume"></div>
-          </div>
-        </div>
+            <div class="container">
+              <form name="input">
+              <input id="phone-number" type="text" />
+              <div class="row">
+                <div class="digit" id="one">1</div>
+                <div class="digit" id="two">2
+                  <div class="sub">ABC</div>
+                </div>
+                <div class="digit" id="three">3
+                  <div class="sub">DEF</div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="digit" id="four">4
+                  <div class="sub">GHI</div>
+                </div>
+                <div class="digit" id="five">5
+                  <div class="sub">JKL</div>
+                </div>
+                <div class="digit">6
+                  <div class="sub">MNO</div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="digit">7
+                  <div class="sub">PQRS</div>
+                </div>
+                <div class="digit">8
+                  <div class="sub">TUV</div>
+                </div>
+                <div class="digit">9
+                  <div class="sub">WXYZ</div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="digit">*
+                </div>
+                <div class="digit">0
+                </div>
+                <div class="digit">#
+                </div>
+              </div>
+              <div class="botrow">
+                <div class="digit">+
+                </div>
+                <div id="call" type=submit>
+                      <i class="fa fa-phone"></i>
+                </div>
+                <div class="hide" id="hangup" type=submit>
+                      <i id="hangup-icon" class="fa fa-phone"></i>
+                </div>
+                <div class="hide" id="hangup-incoming" type=submit>
+                      <i id="hangup-icon" class="fa fa-phone"></i>
+                </div>
+                <i class="fa fa-long-arrow-left dig"></i>
+              </div>
+              </form>
+              <div class="row">
+                <input class="setting" type="checkbox" value="Conference" id="check-conference">
+                <div class="sub">Conference</div>
+                <input class="setting" type="checkbox" value="Record" id="check-record">
+                  <div class="sub">Record</div>
+                  <input disabled class="setting hide" type="checkbox" value="Mute" id="button-mute">
+                  <div id="button-mute-label" class="sub hide">Mute</div>
+              </div>
+              <div class="row">
+                  <input class="setting hide" type="button" value="Add Participant" id="add-participant">
+              </div>
+              <div class="row">
+                  <input class="setting hide" type="button" value="Start Stream" id="button-stream-start">
+                  <input class="setting hide" type="button" value="Stop Stream" id="button-stream-stop">
+              </div>
+              <div id="incoming-call" class="hide">
+                <br>
+                <h2>Incoming Call Controls</h2>
+                <p class="instructions">
+                  Incoming Call from <span id="incoming-number"></span>
+                </p>
+                <div class="row">
+                  <input class="setting" type="button" value="Answer" id="button-accept-incoming">
+                  <input class="setting" type="button" value="Reject" id="button-reject-incoming">
+                </div>
+              </div>
+              <div id="volume-indicators" class="hide">
+                <label>Mic Volume</label>
+                <div id="input-volume"></div>
+                <br /><br />
+                <label>Speaker Volume</label>
+                <div id="output-volume"></div>
+              </div>
+            
+            </div>
+          
+      </div>
       </section>
       <section class="right-column">
         <h2>Event Log</h2>
         <div class="hide" id="log"></div>
+        <div id="feedback" class="hide">
+          <br>
+            <h2>How was the call?</h2>
+              <form>
+                <div class="row">
+                  <div class="column">
+                    <input type="radio" value="1" id="button-1" name="score">Poor
+                    <input type="radio" value="2" id="button-2" name="score">Okay
+                    <input type="radio" value="3" id="button-3" name="score">Good
+                    <input type="radio" value="4" id="button-4" name="score">Very Good
+                    <input type="radio" value="5" id="button-5" name="score">Excellent
+                  </div>
+                    <div class="column">
+                      <input type="checkbox" value="imperfect-audio" id="imperfect-audio">Imperfect Audio<br>
+                      <input type="checkbox" value="dropped-call" id="dropped-call">Dropped Call<br>
+                      <input type="checkbox" value="incorrect-caller-id" id="incorrect-caller-id">Incorrect Caller Id<br>
+                      <input type="checkbox" value="post-dial-delay" id="post-dial-delay">Post Dial Delay<br>
+                    </div>
+                    <div class="column">
+                      <input type="checkbox" value="digits-not-captured" id="digits-not-captured">Digits Not Captured<br>
+                      <input type="checkbox" value="audio-latency" id="audio-latency">Audio Latency<br>
+                      <input type="checkbox" value="unsolicited-call" id="unsolicited-call">Unsolicited Call<br>
+                      <input type="checkbox" value="one-way-audio" id="one-way-audio">One-Way Audio<br>
+                    </div>
+                  </div>
+                <br>
+                <br>
+           </form>
+           <div style="font-size:1em">
+            <a id="submitFeedback" class="button4" style="background-color:#2596be;">Submit Feedback</a>
+          </div>
+        </div>
       </section>
     </main>
+    <section class="bottom">
+      <p id="transcription-container"> </p>
+      </section>
 
     <script src="//ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <script type="text/javascript" src="twilio.min.js"></script>
     <script src="quickstart.js"></script>
+    <script src="streamDisplay.js"></script>
+    <script>
+            // firebase sample code snippets from https://firebase.google.com/docs/cloud-messaging/js/client
+            // Initialize Firebase
+            var config = {
+                apiKey: '',
+                messagingSenderId: '832475355240'
+            };
+            firebase.initializeApp(config);
+
+            // Retrieve Firebase Messaging object.
+            const messaging = firebase.messaging();
+
+            messaging.requestPermission()
+                    .then(function() {
+                        console.log('Notification permission granted.');
+                    })
+                    .catch(function(err) {
+                        console.log('Unable to get permission to notify.', err);
+                    });
+
+            // Get Instance ID token. Initially this makes a network call, once retrieved
+            // subsequent calls to getToken will return from cache.
+            messaging.getToken()
+                    .then(function(currentToken) {
+                        if (currentToken) {
+                            console.log('Token received: ', currentToken);
+                            document.forms["binding_form"]["address_field"].value = currentToken;
+                        } else {
+                            var errMsg = 'No Instance ID token available. Request permission to generate one.';
+                            alert(errMsg);
+                            document.forms["binding_form"]["address_field"].value = errMsg;
+                        }
+                    })
+                    .catch(function(err) {
+                        console.log('An error occurred while retrieving token. ', err);
+                    });
+
+            messaging.onMessage(function(payload) {
+                console.log('Message received. ', payload);
+                alert(payload.data.twi_body);
+            });
+
+            function createBinding(){
+                var identity = document.forms["binding_form"]["identity_field"].value;
+                if (identity == "") {
+                    alert('Identity must be specified');
+                    return false;
+                }
+
+                var address = document.forms["binding_form"]["address_field"].value;
+                if (address == "") {
+                    alert('Address must be specified');
+                    return false;
+                }
+
+                register(identity, address);
+            }
+
+        </script>
   </body>
 </html>
