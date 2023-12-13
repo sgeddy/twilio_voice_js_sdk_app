@@ -24,7 +24,7 @@ let activeRecording = false;
 var client = require('twilio')(accountSid, authToken);
 
 // ngrok / server URL
-let ngrok = "https://twilskis.skisskis.com:3000";
+let ngrok = "https://server_url.com:3000";
 
 // ----- JS SDK FUNCTIONS -----
 
