@@ -1,6 +1,6 @@
 document.addEventListener("DOMContentLoaded", event => {
   //const webSocket = io();
-  webSocket = new WebSocket("ws://localhost:3000");
+  webSocket = new WebSocket("wss://twilskis.skisskis.com:3000");
 
   webSocket.onmessage = function(msg) {
     const data = JSON.parse(msg.data);

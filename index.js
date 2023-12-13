@@ -1,4 +1,5 @@
-const http = require("http");
+const https = require("https");
+const fs = require('fs');
 const path = require("path");
 const express = require("express");
 const bodyParser = require("body-parser");
@@ -15,12 +16,14 @@ app.use(bodyParser.json());
 app.use(router);
 
 // Create http server and run it
-const server = http.createServer(app);
+const server = https.createServer({
+  key: fs.readFileSync('privkey.pem'),
+  cert: fs.readFileSync('fullchain.pem'),
+}, app);
 const port = process.env.PORT || 3000;
 
 // Create WebSocket servers
 const wss = new WebSocket.Server({ server });
-
 
 /*
 const io = require('socket.io')(server);

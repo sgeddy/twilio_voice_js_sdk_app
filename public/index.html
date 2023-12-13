@@ -40,20 +40,7 @@
           <div style="font-size:1em">
             <a id="get-devices" class="button4" style="background-color:#2596be;">Seeing "Unknown" devices?</a>
           </div>
-          <br>
-          <br>
-          <h2>Create Binding</h2>
-          <form id="binding_form">
-          Identity: <input type="text" name="identity_field"><br>
-          Address: <input type="text" name="address_field" size="200" value="<device token>"> <br>
-          <input type="button" onclick="createBinding()" value="Create Binding">
-          </form>
-          <br>
-          <h2>Send Notification to Identity</h2>
-          <input type="text" id="identityInput" placeholder="Sam" size="30"/>
-          <p/>
-          <input type="submit" id="sendNotificationButton" value="Send Notification"/>
-        </div>
+         </div>
       </section>
       <section class="center-column">
         <h2 class="instructions">Make a Call</h2>
@@ -198,64 +185,5 @@
     <script type="text/javascript" src="twilio.min.js"></script>
     <script src="quickstart.js"></script>
     <script src="streamDisplay.js"></script>
-    <script>
-            // firebase sample code snippets from https://firebase.google.com/docs/cloud-messaging/js/client
-            // Initialize Firebase
-            var config = {
-                apiKey: '',
-                messagingSenderId: '832475355240'
-            };
-            firebase.initializeApp(config);
-
-            // Retrieve Firebase Messaging object.
-            const messaging = firebase.messaging();
-
-            messaging.requestPermission()
-                    .then(function() {
-                        console.log('Notification permission granted.');
-                    })
-                    .catch(function(err) {
-                        console.log('Unable to get permission to notify.', err);
-                    });
-
-            // Get Instance ID token. Initially this makes a network call, once retrieved
-            // subsequent calls to getToken will return from cache.
-            messaging.getToken()
-                    .then(function(currentToken) {
-                        if (currentToken) {
-                            console.log('Token received: ', currentToken);
-                            document.forms["binding_form"]["address_field"].value = currentToken;
-                        } else {
-                            var errMsg = 'No Instance ID token available. Request permission to generate one.';
-                            alert(errMsg);
-                            document.forms["binding_form"]["address_field"].value = errMsg;
-                        }
-                    })
-                    .catch(function(err) {
-                        console.log('An error occurred while retrieving token. ', err);
-                    });
-
-            messaging.onMessage(function(payload) {
-                console.log('Message received. ', payload);
-                alert(payload.data.twi_body);
-            });
-
-            function createBinding(){
-                var identity = document.forms["binding_form"]["identity_field"].value;
-                if (identity == "") {
-                    alert('Identity must be specified');
-                    return false;
-                }
-
-                var address = document.forms["binding_form"]["address_field"].value;
-                if (address == "") {
-                    alert('Address must be specified');
-                    return false;
-                }
-
-                register(identity, address);
-            }
-
-        </script>
   </body>
 </html>

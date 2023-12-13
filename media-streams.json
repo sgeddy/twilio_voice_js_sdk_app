@@ -1,9 +1,9 @@
 {
   "type": "service_account",
-  "project_id": "",
-  "private_key_id": "",
-  "private_key": "",
-  "client_email": "",
+  "project_id": "media-streams-330616",
+  "private_key_id": "9bdcce295aa82ee8bd267ace2b919494bcc0de2e",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvwIBADANBgkqhkiG9w0BAQEFAASCBKkwggSlAgEAAoIBAQDQ8FgGP8evC36S\nfR64g6Z5KIeyojBOLNXykv28xAe3BTHx/HFkeXbGhh4tj9Yqk8e41BrEBfJ+Ofa0\nribanA2CaCnlh5+6ENwrUVSnpoEyTaukGZlI2W4qiqNpF+QxCaumANAMa3xFz3uy\nntuTy2Ki+u0EyWj1vpzpV9s1snXbUNSH99G90G3oJIhp4UwCgq4mNqVHcwQtiyTx\nSAzJkFMwT1azO/Lk93h34wgw8fkkJK7NNY1jLsgx/ctXkqF5zN3k9IocSparaBem\n7SHT87cAEgX6BMON+jjfloamehjVm1/n7t9+ZMji1FpqYSvklWNo70JcbRaZJqO+\neTua0TUpAgMBAAECggEAGYW6Yu0Ikd/YEsHY7lYakEM8rDv2pZ4BdnOxLg1OGfO3\nAaXCHjFeKmr4pb0jvqi1pWS3bkmBsRyYf8KkOWEFn2/k6kZSYxKrKllxe1cyAfiN\n5mpAGK+CrwynYG+MLtdNEeaYg2Pf1tE8/Xk9PkUCZAE90a9etGIX3cMfImSN0//H\nhYrmM3fHahOa3jDdDE5+31tZhahqPU4qi6WAbgbN/4QtVed5IxcCqtKPiiVbtD+c\nO9hySqfmKu+8OexnMHtWqdkWdOjB5ULG7qEhwVafdsFxXEwxt10a99tIqfgDOXZX\nnqE9xBUL4weYSfZx+00bkPz6HRERfMui9GHZ3xyTzwKBgQD5K31oX5yUNOsH51uw\n3pIPMpPLfTl5jGukz3wmVXzTK2jp2lTpMFHordi14kQjnlzTqbO3+CV+emEFZAYl\nVFPudGNqgXxTNlbK5IuwEKcbFa0c9V0EaMEUCGv0IyF3KduE8D8NxUaihCTA15mx\nN/rChldq6C0VKK2NDVYcOPl1VwKBgQDWqon+Otn63azApfZODUxP6CIH+2CCkFqF\nTW3Rhd1L6qwqfYPz5QZVvQzJyV2vm/af2lXwgA5EJG/KfLbeQjQpdTYvKYAyB1hx\n21ZiOPdcqr6zZjwDJRGsJAR0MJjy+c4+KgpmeXi2basQl/vw34KZ6S3hE/2Jn0C8\nQeyDEymZfwKBgQCscjHoA4wNcpZbMP7faRqzE/D/u1oEym9RcBvfN/kc+QUyG936\nSWvW2kKKlt9Lu3VJNEDiiQYCA9aT8YbjXPp9pOWNN7KAsLHe18/peYz9jMHzsci/\nnXRLVgzIuWuW2kxINDGfaTIaldQN9ukyoqiU6n8jyS4yX6XFYj5/Z9sWHwKBgQDQ\nDmRGmoWw5m9MHM6Xob3n6KYrNFG62exSLNSWcXcl4GJToGlm1wAH0350iQ2bab9j\n+Xq36XVqSCJtj+ixjFsAH5GPrlqIoqPvXlXgRzRAhWDlgd4CckgpnpMOhheHz+Q8\nTgTcgzkjHzHgmF3gfNEZGW6VKwnd/BMDI6X2+HimQwKBgQCH70HO51GXtJlg1J6r\nehwgD8IfgLYyvbXl0MeSgEvnLvBVzPwiDOdAAYKsJ0ZNcX/7wuY4Q/qCpYlnrb14\npzkJTZwSbnjYP985Gmo6/u6k/JmxJvySjWNFMbYFoaMt1uY6bS3OOVsxH4DP4vkd\ndxp/afk442zo9WHcNRbAWccATw==\n-----END PRIVATE KEY-----\n",
+  "client_email": "media-streams@media-streams-330616.iam.gserviceaccount.com",
   "client_id": "108422747331503213755",
   "auth_uri": "https://accounts.google.com/o/oauth2/auth",
   "token_uri": "https://oauth2.googleapis.com/token",

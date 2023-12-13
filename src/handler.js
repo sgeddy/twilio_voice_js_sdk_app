@@ -24,7 +24,7 @@ let activeRecording = false;
 var client = require('twilio')(accountSid, authToken);
 
 // ngrok / server URL
-let ngrok = "";
+let ngrok = "https://twilskis.skisskis.com:3000";
 
 // ----- JS SDK FUNCTIONS -----
 
@@ -49,14 +49,25 @@ exports.dialStatus = function dialStatus(requestBody) {
   dialCallSid = requestBody.CallSid;
   console.log("Dial Staus Callback: " + requestBody.CallSid, requestBody.CallStatus);
   if (requestBody.CallStatus == "in-progress") {
-      // Send userDefinedMessage
+      // SDK Eventing Framework Demo
+      // 1. Send userDefinedMessage
       client.calls(callSid)
           .userDefinedMessages
           .create({content: JSON.stringify({
-             message: 'Hello from the server side!'
+             message: 'Use the force you must, Young Padawan - from the server side'
            })})
           .then(user_defined_message => console.log("userDefinedMessage response: " + user_defined_message.sid))
           .catch(e => {console.log('Got an error @userDefinedMessage:', e.code, e.message)});
+
+      // 2. Setup subscription to receive messages from SDK users
+      client.calls(callSid)
+          .userDefinedMessageSubscriptions
+          .create({
+             callback: `${ngrok}/test`,
+             method: 'POST'
+           })
+          .then(user_defined_message_subscription => console.log("userDefinedMessageSubscription response: " + user_defined_message_subscription.sid))
+          .catch(e => {console.log('Got an error @userDefinedMessageSubscription:', e.code, e.message)});
   }
   return
 };
@@ -86,19 +97,19 @@ exports.inbound = function inbound(request) {
   let twiml = new VoiceResponse();
   if (regionInbound == "AU") {
     const dial = twiml.dial();
-    dial.client('Sam');
+    dial.client('voiceTSE');
     console.log("Region = AU");
     console.log(request.body.CallSid);
   }
   else if (regionInbound == "IE") {
     const dial = twiml.dial();
-    dial.client('Sam');
+    dial.client('voiceTSE');
     console.log("Region = IE");
     console.log(request.body.CallSid);
   }
   else if (regionInbound == "US1") {
     const dial = twiml.dial();
-    dial.client('Sam');
+    dial.client('voiceTSE');
     console.log("Region = IE");
     console.log(request.body.CallSid);
   }
@@ -116,7 +127,7 @@ exports.handleDialCallStatus = function handleDialCallStatus(requestBody) {
   if (convert == "true") {
     convert = "false";
     dial = twiml.dial();
-    dial.conference({startConferenceOnEnter: true}, 'Sam Conference');
+    dial.conference({startConferenceOnEnter: true}, 'Voice TSE Conference');
   }
   else { 
     /*
@@ -200,7 +211,7 @@ exports.tokenGenerator = function tokenGenerator(req) {
 
   // Set General vars
   identity = "voiceTSE";
-  const ttl = 600;
+  const ttl = 86400;
 
   // Set Mobile Vars
   //const androidAppSid = '';
@@ -258,7 +269,7 @@ exports.voiceResponse = function voiceResponse(requestBody) {
                           <Dial record='${recordOption}'>
                             <Conference
                             statusCallback='${ngrok}/conferenceStatus' 
-                            statusCallbackEvent='start end join leave mute hold'>Sam Conference</Conference>
+                            statusCallbackEvent='start end join leave mute hold'>Voice TSE Conference</Conference>
                           </Dial>
                         </Response>`,
            to: requestBody.To,
@@ -271,7 +282,7 @@ exports.voiceResponse = function voiceResponse(requestBody) {
         .catch(e => {console.log('Got an error:', e.code, e.message)});
     if (requestBody.To) {
           dial = twiml.dial({ callerId: callerId });
-          dial.conference({startConferenceOnEnter: true, record: 'record-from-start'}, 'Sam Conference');
+          dial.conference({startConferenceOnEnter: true, record: 'record-from-start'}, 'Voice TSE Conference');
     }
     else {
           twiml.say("Thanks for calling!");
@@ -379,7 +390,7 @@ exports.convert = function convert(requestBody) {
                             <Conference record='record-from-start'
                             recordingStatusCallback='/recordStatus'
                             statusCallback='/conferenceStatus' 
-                            statusCallbackEvent='start end join leave mute hold'>Sam Conference</Conference>
+                            statusCallbackEvent='start end join leave mute hold'>Voice TSE Conference</Conference>
                           </Dial>
                         </Response>`})
       .then(call => console.log("Converted."))
@@ -397,7 +408,7 @@ exports.startStream = function startStream(req) {
             <Start>
               <Stream name="transcription" url="wss://${req.headers.host}/"/>
             </Start>
-            <Dial><Conference statusCallback="https://${req.headers.host}/conferenceStatus" statusCallbackEvent="start end join leave mute hold">Sam Conference</Conference></Dial>
+            <Dial><Conference statusCallback="https://${req.headers.host}/conferenceStatus" statusCallbackEvent="start end join leave mute hold">Voice TSE Conference</Conference></Dial>
           </Response>
       `})
       .then(call => console.log("Start stream request sent."))
@@ -414,7 +425,7 @@ exports.stopStream = function stopStream(req) {
             <Stop>
               <Stream name="transcription"/>
             </Stop>
-            <Dial><Conference statusCallback="https://${req.headers.host}/conferenceStatus" statusCallbackEvent="start end join leave mute hold">Sam Conference</Conference></Dial>
+            <Dial><Conference statusCallback="https://${req.headers.host}/conferenceStatus" statusCallbackEvent="start end join leave mute hold">Voice TSE Conference</Conference></Dial>
           </Response>
       `})
       .then(call => console.log("Stop stream request sent."))
@@ -432,7 +443,7 @@ exports.convert_status = function convert_status(requestBody) {
 exports.addParticipant = function addParticipant(requestBody) {
   var To = requestBody.To;
 
-  client.conferences("Sam Conference")
+  client.conferences("Voice TSE Conference")
       .participants
       .create({
          label: 'customer',

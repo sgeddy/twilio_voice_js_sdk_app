@@ -84,7 +84,7 @@
 
   // Regional elements
   const launchDiv = document.getElementById("launch-div");
-
+  let region = "";
 
   // ----- GLOBAL VARS -----
 
@@ -196,6 +196,7 @@
 
   // Mute button
   $(muteButton).click(function() {
+    // mute or unmute call
         if (incomingCallFlag == false) {
           if (mute == true) {
           mute = false;
@@ -207,7 +208,14 @@
           log("Muted.");
           call.mute(mute);
         }
-      }   
+      }
+      // Send message to Server with SDK Eventing Framework
+      const messageObject = {
+         content: { key1: 'Master Yoda, this is a messsage from Padawan Young. The mute button has been clicked.'},
+         messageType: 'user-defined-message', 
+         contentType: "application/json"        
+      }
+      call.sendMessage(messageObject)   
   });
   
   $('.fa-long-arrow-left').on('click', function() {
@@ -264,7 +272,6 @@
   // SETUP STEP 2: Request an Access Token
   async function startupClient() {
     try {
-        var region = "";
         if (document.getElementById('button-us1').checked) region = "us1";
         else if (document.getElementById('button-ie1').checked) region = "ie1";
         else if (document.getElementById('button-au1').checked) region = "au1";
@@ -305,7 +312,7 @@
         sounds: {
           incoming: 'Long_Winter.mp3', 
         },
-        tokenRefreshMs: 30000,
+        tokenRefreshMs: 10000,
       };
     try {
       device = new Twilio.Device(token, options);
@@ -351,7 +358,8 @@
 
     device.on('tokenWillExpire', () => {
       console.log("tokenWillExpire event fired");
-      return $.getJSON("/token").then(newToken => {
+      log("Requesting New Access Token...");
+      return $.getJSON("/token?region=" + region).then(newToken => {
         console.log("New Token: " + newToken.token);
         device.updateToken(newToken.token);
         console.log("Device succesfully updated with new token.");
@@ -477,16 +485,24 @@
       // "accepted" means the call has finished connecting and the state is now "open"
       call.addListener("accept", updateUIAcceptedCall);
       call.addListener("disconnect", updateUIDisconnectedCall);
-      call.addListener("messageReceived", handleMessage);
+      call.addListener("messageReceived", handleMessageReceived);
+      call.addListener("messageSent", handleMessageSent);
       } 
     else {
       log("Unable to make call.");
     }
   }
-  function handleMessage(call) {
+  function handleMessageReceived(call) {
     var serverMessage = call.content.message;
     console.log(serverMessage);
-    log("Message from server: " + serverMessage);
+    log(serverMessage);
+  }
+
+  function handleMessageSent(message) {
+      const voiceEventSid = message.voiceEventSid;  
+      console.log('Message sent to the server. voiceEventSid: ', voiceEventSid);
+      console.log("Message contents: " + message.content.key1);
+      log("Message sent to the server: " + message.content.key1);
   }
 
   function updateUIAcceptedCall(call) {
